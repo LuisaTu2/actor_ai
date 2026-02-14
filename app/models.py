@@ -107,7 +107,7 @@ class Orchestrator:
         The user is {self.actor.name} in the play {self.play.title}.
         You play all other characters.
         The user's last line was: "{last_user_line}"
-        Respond with the next line of your character, keeping the scene flowing naturally.
+        Respond **only with the next line of your character** — do not add any narration, context, or quotes. Just the line text.
         """
 
     def check_user_line_is_valid(self, user_line):

@@ -17,6 +17,7 @@ const SelectPlay = () => {
   const [listening, setListening] = useState<boolean>(false);
   const [userLine, setUserLine] = useState("");
   const plays: Plays = playsData;
+  const [aiLine, setAiLine] = useState<string>("");
 
   const handlePlayChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedPlay(e.target.value);
@@ -51,6 +52,7 @@ const SelectPlay = () => {
         }
 
         console.log("settings saved:", data);
+        alert("Saved play and character settings.");
       } catch (err) {
         console.error("Network error:", err);
         alert("Network error, check console.");
@@ -83,7 +85,8 @@ const SelectPlay = () => {
       console.log("User said:", transcript);
       setUserLine(transcript);
       setListening(false);
-
+      getNextLine(transcript);
+      // get the next line
       // Optionally: submit immediately
       // submitLine(transcript);
     };
@@ -96,6 +99,34 @@ const SelectPlay = () => {
     recognition.onend = () => {
       setListening(false);
     };
+  };
+
+  const getNextLine = async (userLine: string) => {
+    try {
+      const response = await fetch("http://localhost:5000/line", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          line: userLine,
+        }),
+      });
+
+      const data = await response.json();
+      const aiLine = data["line"];
+      setAiLine(aiLine);
+      console.log("data: ", aiLine);
+
+      if (!response.ok) {
+        console.error("Server error:", data);
+        alert("Error geting next line: " + data.error);
+        return;
+      }
+    } catch (err) {
+      console.error("unable to get next line:", err);
+      alert("Unable to get next line");
+    }
   };
 
   return (
@@ -151,7 +182,10 @@ const SelectPlay = () => {
           {listening ? "listening..." : "🎤 say your line"}
         </button>
       </div>
-      <div className="lines">{userLine}</div>
+      <div className="lines">
+        <div>{userLine}</div>
+        <div>{aiLine}</div>
+      </div>
     </div>
   );
 };
