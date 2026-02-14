@@ -1,17 +1,18 @@
-from constants import GPT_MODEL
-from models import Rehearser
+from models import Actor, OpenAIClient, Orchestrator, Play
 from flask import Flask, request, jsonify
-import openai
-import os
 import uuid
 
-from openai import OpenAI
+from flask_cors import CORS
 
 app = Flask(__name__)
-openai.api_key = os.getenv("OPENAI_API_KEY")
+CORS(app)
 
 sessions = {}
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+actor = Actor("")
+play = Play("")
+llm_client = OpenAIClient()
+orchestrator = Orchestrator(llm_client=llm_client, play=play, actor=actor)
 
 
 @app.route("/set_play", methods=["POST"])
@@ -21,14 +22,12 @@ def set_play():
         session_id = str(uuid.uuid4())
         user_char = data["user_character"]
         play_name = data["play_name"]
-        # ai_char = data.get("ai_character", "AI")  # optional default
-
-        sessions[session_id] = Rehearser(play_name, user_char)
-        print("sessions: ", sessions)
+        orchestrator.set_play_and_actor(play_title=play_name, user_actor=user_char)
         return jsonify({"status": "ok", "session_id": session_id})
 
     except Exception as e:
         print("error: ", e)
+        return jsonify({"error": str(e)}), 500
 
 
 @app.route("/line", methods=["POST"])
@@ -38,29 +37,23 @@ def line():
             return jsonify({"error": "expected JSON body"}), 400
 
         data = request.get_json()
-        session_id = data.get("session_id")
+        # session_id = data.get("session_id")
         user_line = data.get("line")
-        if not session_id or not user_line:
-            return jsonify({"error": "missing session_id or line"}), 400
+        if not user_line:
+            return jsonify({"error": "missing user line"}), 400
 
-        session = sessions.get(session_id)
-        if not session:
-            return jsonify({"error": "session not found"}), 404
+        is_valid_line = orchestrator.check_user_line_is_valid(user_line=user_line)
+        print("is line valid: ", is_valid_line)
+        if not is_valid_line:
+            return jsonify({"error": str("incorrect line")}), 500
 
-        session.record_line(session.user.name, user_line)
+        prompt = orchestrator.get_next_line_prompt(last_user_line=user_line)
+        next_line = llm_client.get_next_line(prompt=prompt)
 
-        prompt = session.get_context_prompt()
-        print("sessions: ", prompt, sessions)
-        response = client.chat.completions.create(
-            model=GPT_MODEL, messages=[{"role": "user", "content": prompt}]
-        )
-        ai_line = response.choices[0].message.content.strip()
+        print("ai line: ", next_line)
+        # remember both lines
 
-        print("ai line: ", ai_line)
-        # record AI's line
-        # session.record_line(session.ai.name, ai_line)
-
-        return jsonify({"line": ai_line})
+        return jsonify({"line": next_line})
 
     except Exception as e:
         print("error: ", e)

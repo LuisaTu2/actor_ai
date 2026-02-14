@@ -1,0 +1,133 @@
+{
+  "Romeo and Juliet": {
+    "characters": [
+      "Romeo",
+      "Juliet",
+      "Mercutio",
+      "Tybalt",
+      "Benvolio",
+      "Nurse",
+      "Friar Laurence",
+      "Capulet",
+      "Montague",
+      "Paris"
+    ],
+    "text": "FULL PLAY TEXT HERE..."
+  },
+  "Hamlet": {
+    "characters": [
+      "Hamlet",
+      "Ophelia",
+      "Claudius",
+      "Gertrude",
+      "Polonius",
+      "Laertes",
+      "Horatio",
+      "Ghost"
+    ],
+    "text": "FULL PLAY TEXT HERE..."
+  },
+  "Macbeth": {
+    "characters": [
+      "Macbeth",
+      "Lady Macbeth",
+      "Banquo",
+      "Duncan",
+      "Macduff",
+      "Malcolm",
+      "Lady Macduff",
+      "Witches"
+    ],
+    "text": "FULL PLAY TEXT HERE..."
+  },
+  "Othello": {
+    "characters": [
+      "Othello",
+      "Desdemona",
+      "Iago",
+      "Cassio",
+      "Emilia",
+      "Roderigo",
+      "Brabantio"
+    ],
+    "text": "FULL PLAY TEXT HERE..."
+  },
+  "King Lear": {
+    "characters": [
+      "King Lear",
+      "Goneril",
+      "Regan",
+      "Cordelia",
+      "Gloucester",
+      "Edmund",
+      "Edgar",
+      "Kent",
+      "Fool"
+    ],
+    "text": "FULL PLAY TEXT HERE..."
+  },
+  "A Midsummer Night's Dream": {
+    "characters": [
+      "Oberon",
+      "Titania",
+      "Puck",
+      "Lysander",
+      "Hermia",
+      "Demetrius",
+      "Helena",
+      "Bottom"
+    ],
+    "text": "FULL PLAY TEXT HERE..."
+  },
+  "Julius Caesar": {
+    "characters": [
+      "Julius Caesar",
+      "Brutus",
+      "Cassius",
+      "Mark Antony",
+      "Casca",
+      "Calpurnia",
+      "Portia"
+    ],
+    "text": "FULL PLAY TEXT HERE..."
+  },
+  "The Tempest": {
+    "characters": [
+      "Prospero",
+      "Miranda",
+      "Ariel",
+      "Caliban",
+      "Ferdinand",
+      "Alonso",
+      "Antonio",
+      "Sebastian"
+    ],
+    "text": "FULL PLAY TEXT HERE..."
+  },
+  "Twelfth Night": {
+    "characters": [
+      "Viola",
+      "Sebastian",
+      "Olivia",
+      "Orsino",
+      "Malvolio",
+      "Sir Toby Belch",
+      "Maria",
+      "Sir Andrew Aguecheek"
+    ],
+    "text": "FULL PLAY TEXT HERE..."
+  },
+  "Much Ado About Nothing": {
+    "characters": [
+      "Benedick",
+      "Beatrice",
+      "Claudio",
+      "Hero",
+      "Don Pedro",
+      "Don John",
+      "Leonato",
+      "Dogberry"
+    ],
+    "text": "FULL PLAY TEXT HERE..."
+  }
+}
